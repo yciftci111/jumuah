@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jumuʿah-onderzoek – resultaten</title>
+<meta name="description" content="Belemmeringen, ervaren verplichting en deelname aan het vrijdaggebed: KMO, factoranalyse, betrouwbaarheid, kruistabellen, regressie en Hayes PROCESS Model 4.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f5f0; --paper: #fffdf9; --ink: #1b1a17; --ink2: #55524b; --muted: #8a867c;
+  --line: #e6e1d6; --soft: #efebe2;
+  --acc: #1f7a74; --acc-soft: #dcebe9; --acc-ink: #135a55;
+  --warm: #c2562a; --warm-soft: #f6e2d8;
+  --grid: #ece8de; --s1: #1f7a74; --s2: #c2562a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141412; --paper: #1c1b19; --ink: #f0ede6; --ink2: #c4bfb3; --muted: #8f8a7f;
+    --line: #34322d; --soft: #24231f;
+    --acc: #4fb3aa; --acc-soft: #1d3634; --acc-ink: #8fd6cf;
+    --warm: #e2794b; --warm-soft: #3a261d;
+    --grid: #2b2a26; --s1: #4fb3aa; --s2: #e2794b;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141412; --paper: #1c1b19; --ink: #f0ede6; --ink2: #c4bfb3; --muted: #8f8a7f;
+  --line: #34322d; --soft: #24231f;
+  --acc: #4fb3aa; --acc-soft: #1d3634; --acc-ink: #8fd6cf;
+  --warm: #e2794b; --warm-soft: #3a261d;
+  --grid: #2b2a26; --s1: #4fb3aa; --s2: #e2794b;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.65 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: Newsreader, Georgia, serif; font-weight: 500; letter-spacing: -0.01em; line-height: 1.15; }
+h2 { font-size: clamp(28px, 4vw, 38px); margin: 0 0 8px; }
+h3 { font-size: 22px; margin: 36px 0 10px; }
+h4 { margin: 0; font-size: 15px; font-weight: 600; }
+p { margin: 0 0 14px; }
+a { color: var(--acc-ink); }
+.muted { color: var(--muted); }
+small { font-weight: 400; color: var(--muted); }
+
+/* hero */
+.hero { border-bottom: 1px solid var(--line); background:
+  radial-gradient(1200px 400px at 85% -10%, var(--acc-soft), transparent 60%), var(--bg); }
+.hero-in { max-width: 1180px; margin: 0 auto; padding: 72px 24px 56px; }
+.eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--acc-ink); font-weight: 600; }
+.hero h1 { font-size: clamp(36px, 6vw, 64px); margin: 14px 0 18px; max-width: 16ch; }
+.hero h1 em { font-style: italic; color: var(--acc); }
+.lead { font-size: 19px; color: var(--ink2); max-width: 62ch; }
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 40px; }
+.kpi { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 18px 18px 16px; }
+.kpi .v { font-family: Newsreader, serif; font-size: 36px; line-height: 1; }
+.kpi .l { font-size: 13px; color: var(--ink2); margin-top: 8px; }
+.kpi .s { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* layout */
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: 210px 1fr; gap: 56px; }
+nav.toc { position: sticky; top: 24px; align-self: start; padding-top: 56px; font-size: 14px; }
+nav.toc ol { list-style: none; padding: 0; margin: 0; counter-reset: s; }
+nav.toc li { counter-increment: s; }
+nav.toc a { display: flex; gap: 10px; padding: 6px 10px; border-radius: 8px; color: var(--ink2); text-decoration: none; }
+nav.toc a::before { content: counter(s, decimal-leading-zero); color: var(--muted); font-variant-numeric: tabular-nums; }
+nav.toc a:hover, nav.toc a.actief { background: var(--paper); color: var(--ink); }
+nav.toc a.actief::before { color: var(--acc); }
+main { min-width: 0; padding-bottom: 80px; }
+section { padding: 56px 0 8px; border-bottom: 1px solid var(--line); }
+section:last-child { border-bottom: 0; }
+.num-h { font-family: Inter; font-size: 13px; color: var(--acc-ink); font-weight: 600; letter-spacing: .08em; }
+.intro { font-size: 17px; color: var(--ink2); max-width: 70ch; }
+
+/* kaarten / panelen */
+.panel { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 22px; margin: 18px 0; }
+.panel > h4 { margin-bottom: 4px; }
+.panel .cap { font-size: 13px; color: var(--muted); margin: 0 0 12px; }
+.duo { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 16px; }
+.duo > *, .grid2 > *, .panel { min-width: 0; }
+.callout { border-left: 3px solid var(--acc); background: var(--acc-soft); padding: 14px 18px; border-radius: 0 12px 12px 0; margin: 18px 0; color: var(--ink); }
+.callout.warm { border-color: var(--warm); background: var(--warm-soft); }
+.callout b { color: var(--ink); }
+ul.bul { padding-left: 20px; margin: 0 0 14px; } ul.bul li { margin-bottom: 8px; }
+
+/* tabellen */
+.tw { overflow-x: auto; margin: 6px 0; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 9px 10px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+thead th { font-size: 12px; font-weight: 600; color: var(--ink2); text-transform: none; border-bottom: 1.5px solid var(--ink2); white-space: nowrap; }
+th.c { text-align: center; border-bottom: 1px solid var(--line); }
+.num { text-align: right; white-space: nowrap; }
+tbody tr:last-child td { border-bottom: 1.5px solid var(--ink2); }
+tr.foot td { color: var(--ink2); background: var(--soft); }
+td.hl { color: var(--warm); font-weight: 600; }
+td.ld { background: color-mix(in srgb, var(--acc) calc(var(--a) * 38%), transparent); font-weight: 500; }
+tr.gM td:first-child b { color: var(--acc-ink); }
+td.hm.pos { background: color-mix(in srgb, var(--acc) calc(var(--a) * 45%), transparent); }
+td.hm.neg { background: color-mix(in srgb, var(--warm) calc(var(--a) * 45%), transparent); }
+table.cor th { font-weight: 500; }
+sup { font-size: 10px; margin-left: 1px; }
+
+/* figuren */
+svg.chart { width: 100%; height: auto; display: block; font-family: Inter, sans-serif; }
+.grid { stroke: var(--grid); stroke-width: 1; }
+.axis { stroke: var(--ink2); }
+.ref { stroke: var(--muted); stroke-dasharray: 2 3; }
+.tick { fill: var(--muted); font-size: 11px; }
+.as { fill: var(--ink2); font-size: 12px; }
+.lab { fill: var(--ink); font-size: 12px; font-weight: 600; }
+.flab { fill: var(--ink); font-size: 13px; }
+.lijn { fill: none; stroke-width: 2; }
+.lijn.s1 { stroke: var(--s1); } .lijn.s2 { stroke: var(--s2); }
+.dot { fill: var(--s1); stroke: var(--paper); stroke-width: 2; }
+.dot:hover, .fdot:hover { r: 8; }
+.scree .dot.s1:not(.boven) { fill: var(--paper); stroke: var(--s1); }
+svg.chart .dot.s1 { cursor: default; }
+.trend { stroke: var(--s2); stroke-width: 2; }
+.bar { fill: var(--s1); } .bar.uit { fill: var(--muted); opacity: .45; }
+.ciband { fill: var(--acc-soft); }
+.nul { stroke: var(--ink); stroke-width: 1; stroke-dasharray: 3 3; }
+.punt { stroke: var(--ink); stroke-width: 2; }
+.ci { stroke: var(--s1); stroke-width: 3; stroke-linecap: round; } .ci.ns { stroke: var(--muted); }
+.fdot { fill: var(--s1); stroke: var(--paper); stroke-width: 2; } .fdot.ns { fill: var(--muted); }
+.legend { display: flex; gap: 18px; font-size: 13px; color: var(--ink2); margin-top: 8px; flex-wrap: wrap; }
+.legend i { display: inline-block; width: 18px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
+figure.mini { margin: 0; }
+figure.mini figcaption { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink2); margin-bottom: 4px; }
+
+/* padmodel */
+.model { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 26px 22px 18px; margin: 22px 0; }
+svg.padmodel { width: 100%; height: auto; font-family: Inter, sans-serif; }
+.padmodel rect { fill: var(--acc-soft); stroke: var(--acc); stroke-width: 1.8; }
+.padmodel .node text { fill: var(--ink); font-size: 15px; text-anchor: middle; }
+.padmodel .node text.letter { font-family: Newsreader, serif; font-size: 26px; font-weight: 600; }
+.padmodel .pad { stroke: var(--ink2); stroke-width: 2.2; }
+.padmodel .pad.indirect { stroke: var(--acc); }
+.padmodel .pijlkop { fill: var(--ink2); }
+.padmodel .coef { fill: var(--ink); font-size: 16px; font-weight: 600; }
+.padmodel .coefsub { fill: var(--muted); font-size: 12px; }
+.effect-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
+.effect { border-radius: 12px; padding: 14px 16px; background: var(--soft); }
+.effect .k { font-size: 12px; color: var(--ink2); }
+.effect .v { font-family: Newsreader, serif; font-size: 28px; line-height: 1.1; margin-top: 2px; }
+.effect .ci-t { font-size: 12px; color: var(--muted); }
+.effect.main { background: var(--acc); color: #fff; }
+.effect.main .k, .effect.main .ci-t { color: rgba(255,255,255,.85); }
+:root[data-theme="dark"] .effect.main { color: #0d1f1d; }
+:root[data-theme="dark"] .effect.main .k, :root[data-theme="dark"] .effect.main .ci-t { color: rgba(13,31,29,.8); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .effect.main { color: #0d1f1d; } :root:not([data-theme="light"]) .effect.main .k, :root:not([data-theme="light"]) .effect.main .ci-t { color: rgba(13,31,29,.8); } }
+
+/* kruistabelkaarten */
+.kaarten { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; margin: 18px 0; }
+.kaart { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.kaart.sig { border-color: color-mix(in srgb, var(--acc) 50%, var(--line)); }
+.kaart header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.kaart .sub { font-size: 12px; color: var(--muted); margin: -6px 0 0; }
+.badge { font-size: 11px; padding: 2px 8px; border-radius: 99px; background: var(--soft); color: var(--muted); white-space: nowrap; }
+.badge.ja { background: var(--acc-soft); color: var(--acc-ink); font-weight: 600; }
+.kb .kbl { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
+.track { position: relative; height: 22px; background: var(--soft); border-radius: 6px; overflow: hidden; }
+.fill { height: 100%; background: var(--acc); border-radius: 6px 4px 4px 6px; }
+.kaart:not(.sig) .fill { background: var(--muted); opacity: .55; }
+.pv { position: absolute; right: 8px; top: 1px; font-size: 12px; font-weight: 600; }
+.kaart footer { font-size: 12px; color: var(--muted); margin-top: auto; padding-top: 6px; border-top: 1px dashed var(--line); }
+
+details { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; margin: 14px 0; }
+details summary { cursor: pointer; padding: 12px 16px; font-weight: 500; font-size: 14px; }
+details > div { padding: 0 16px 14px; }
+.apa { font-family: Newsreader, serif; font-size: 18px; line-height: 1.6; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.lim { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+.lim h4 { margin-bottom: 6px; }
+.lim p { font-size: 14px; color: var(--ink2); margin: 0; }
+footer.site { border-top: 1px solid var(--line); padding: 32px 24px; text-align: center; font-size: 13px; color: var(--muted); }
+.themeknop { position: fixed; right: 16px; bottom: 16px; border: 1px solid var(--line); background: var(--paper); color: var(--ink2); border-radius: 99px; padding: 8px 14px; font: 500 13px Inter, sans-serif; cursor: pointer; }
+
+@media (max-width: 960px) {
+  .wrap { grid-template-columns: 1fr; gap: 0; }
+  nav.toc { display: none; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .hero-in { padding: 48px 16px 40px; } .wrap { padding: 0 16px; }
+  .duo, .grid2, .effect-row { grid-template-columns: 1fr; }
+  .panel { padding: 16px; }
+  .kpi .v { font-size: 30px; }
+  .model { padding: 16px 12px; }
+  .model .scroll { overflow-x: auto; }
+  svg.padmodel { min-width: 600px; }
+}
+@media print { nav.toc, .themeknop { display: none; } .wrap { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="hero-in">
+  <div class="eyebrow">Onderzoeksrapport · Enquête oktober 2026</div>
+  <h1>Wat houdt moslims weg van <em>Jumuʿah</em>?</h1>
+  <p class="lead">Een analyse van praktische belemmeringen, ervaren religieuze verplichting en deelname aan het vrijdaggebed onder 35 volwassen moslims in Nederland. Het mediatiemodel is getoetst met Hayes PROCESS Model 4.</p>
+  <div class="kpis">
+    <div class="kpi"><div class="v">35</div><div class="l">Respondenten</div><div class="s">na uitsluiting van 2 van de 37</div></div>
+    <div class="kpi"><div class="v">0,71</div><div class="l">R² voor deelname</div><div class="s">belemmeringen + verplichting</div></div>
+    <div class="kpi"><div class="v">−0,22</div><div class="l">Indirect effect (ab)</div><div class="s">95%-BI [−0,45; −0,04]</div></div>
+    <div class="kpi"><div class="v">34%</div><div class="l">van het effect via verplichting</div><div class="s">gedeeltelijke mediatie</div></div>
+  </div>
+</div></header>
+
+<div class="wrap">
+<nav class="toc" aria-label="Inhoud"><ol>
+  <li><a href="#kern">Kernbevindingen</a></li>
+  <li><a href="#data">Data</a></li>
+  <li><a href="#kmo">KMO &amp; Bartlett</a></li>
+  <li><a href="#fa">Factoranalyse</a></li>
+  <li><a href="#betr">Betrouwbaarheid</a></li>
+  <li><a href="#kruis">Kruistabellen</a></li>
+  <li><a href="#reg">Regressie</a></li>
+  <li><a href="#hayes">Hayes Model 4</a></li>
+  <li><a href="#lim">Beperkingen</a></li>
+  <li><a href="#repro">Methode &amp; code</a></li>
+</ol></nav>
+
+<main>
+
+<section id="kern">
+  <div class="num-h">01</div>
+  <h2>Kernbevindingen</h2>
+  <div class="model">
+    <div class="scroll">
+<svg viewBox="0 0 760 340" class="padmodel" role="img" aria-label="Padmodel Hayes Model 4 met coëfficiënten">
+  <defs><marker id="pijl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" class="pijlkop"/></marker></defs>
+  <line x1="150" y1="214" x2="262" y2="118" class="pad indirect" marker-end="url(#pijl)"/>
+  <line x1="498" y1="118" x2="610" y2="214" class="pad indirect" marker-end="url(#pijl)"/>
+  <line x1="232" y1="268" x2="526" y2="268" class="pad direct" marker-end="url(#pijl)"/>
+  
+      <g class="node m">
+        <rect x="270" y="20" width="220" height="104" rx="16"/>
+        <text x="380" y="56" class="letter">M</text>
+        <text x="380" y="84">Ervaren religieuze</text>
+        <text x="380" y="106">verplichting</text>
+      </g>
+  
+      <g class="node x">
+        <rect x="10" y="216" width="220" height="104" rx="16"/>
+        <text x="120" y="252" class="letter">X</text>
+        <text x="120" y="280">Praktische</text>
+        <text x="120" y="302">belemmeringen</text>
+      </g>
+  
+      <g class="node y">
+        <rect x="530" y="216" width="220" height="104" rx="16"/>
+        <text x="640" y="252" class="letter">Y</text>
+        <text x="640" y="280">Deelname aan</text>
+        <text x="640" y="302">Jumuʿah</text>
+      </g>
+  <text x="168" y="150" class="coef" text-anchor="end">a = −0,20</text>
+  <text x="168" y="170" class="coefsub" text-anchor="end">p = ,086</text>
+  <text x="592" y="150" class="coef" text-anchor="start">b = 1,06***</text>
+  <text x="592" y="170" class="coefsub" text-anchor="start">p < ,001</text>
+  <text x="380" y="300" class="coef" text-anchor="middle">c′ = −0,42***</text>
+  <text x="380" y="322" class="coefsub" text-anchor="middle">totaal effect c = −0,64***</text>
+</svg></div>
+    <div class="effect-row">
+      <div class="effect main"><div class="k">Indirect effect ab</div><div class="v">−0,218</div><div class="ci-t">95%-bootstrap-BI [−0,448; −0,037]</div></div>
+      <div class="effect"><div class="k">Direct effect c′</div><div class="v">−0,42</div><div class="ci-t">p < ,001</div></div>
+      <div class="effect"><div class="k">Totaal effect c</div><div class="v">−0,64</div><div class="ci-t">p < ,001</div></div>
+    </div>
+  </div>
+  <ul class="bul">
+    <li><b>Belemmeringen hangen samen met minder deelname</b> (r = −0,56). <b>Ervaren verplichting hangt samen met meer deelname</b> (r = 0,76).</li>
+    <li><b>Er is gedeeltelijke mediatie.</b> Ongeveer 34% van het effect van belemmeringen loopt via een zwakkere verplichtingsbeleving. De rest werkt direct.</li>
+    <li><b>Het a-pad is zwak</b> (p = ,086). De mediatie steunt vooral op het sterke b-pad, en is niet significant als de uitkomst het feitelijke aantal bijgewoonde gebeden is.</li>
+    <li><b>Flexibiliteit is belangrijker dan werk op zich.</b> Wie veel vrijheid heeft om werk of studie te onderbreken, woonde veel vaker alle vier de laatste gebeden bij (73% tegenover 12%). Of iemand op vrijdag werkt, maakt op zichzelf weinig uit.</li>
+    <li><b>De schalen zijn bruikbaar:</b> α = 0,83 (belemmeringen), 0,70 (verplichting) en 0,91 (deelname).</li>
+  </ul>
+</section>
+
+<section id="data">
+  <div class="num-h">02</div>
+  <h2>Data en meetinstrument</h2>
+  <p class="intro">Elke schaal bestaat uit zes Likert-items (1 = helemaal mee oneens … 5 = helemaal mee eens). Negatief geformuleerde items zijn omgescoord (r) en de schaalscore is het gemiddelde. Als aanvullende gedragsmaat telt het aantal van de laatste vier vrijdaggebeden dat iemand heeft bijgewoond (0–4).</p>
+  <div>
+    <div class="panel"><h4>Schaalscores</h4><p class="cap">Hogere score = meer belemmeringen / verplichting / deelname</p>
+      <div class="tw"><table class=""><thead><tr><th class="">Schaal</th><th class="num">n</th><th class="num">M</th><th class="num">SD</th><th class="num">Min</th><th class="num">Max</th><th class="num">Scheefheid</th></tr></thead><tbody><tr><td class="">Praktische belemmeringen</td><td class="num">35</td><td class="num">2,05</td><td class="num">0,85</td><td class="num">1,00</td><td class="num">3,83</td><td class="num">0,65</td></tr><tr><td class="">Ervaren religieuze verplichting</td><td class="num">35</td><td class="num">4,32</td><td class="num">0,59</td><td class="num">2,67</td><td class="num">5,00</td><td class="num">−1,02</td></tr><tr><td class="">Deelname aan Jumuʿah</td><td class="num">35</td><td class="num">4,14</td><td class="num">0,96</td><td class="num">2,00</td><td class="num">5,00</td><td class="num">−0,93</td></tr><tr><td class="">Bijgewoond (laatste 4 vrijdagen)</td><td class="num">34</td><td class="num">3,15</td><td class="num">1,28</td><td class="num">0,00</td><td class="num">4,00</td><td class="num">−1,42</td></tr></tbody></table></div></div>
+    <div class="panel"><h4>Correlaties (Pearson)</h4><p class="cap">* p &lt; ,05 · ** p &lt; ,01 · *** p &lt; ,001</p><div class="tw"><table class="cor"><thead><tr><th></th><th class='num'>X Belemmeringen</th><th class='num'>M Verplichting</th><th class='num'>Y Deelname</th><th class='num'>Bijgewoond (0–4)</th></tr></thead><tbody><tr><th>X Belemmeringen</th><td class="num muted">—</td><td class="num muted"></td><td class="num muted"></td><td class="num muted"></td></tr><tr><th>M Verplichting</th><td class="num hm neg" style="--a:0.29">−0,29<sup></sup></td><td class="num muted">—</td><td class="num muted"></td><td class="num muted"></td></tr><tr><th>Y Deelname</th><td class="num hm neg" style="--a:0.56">−0,56<sup>***</sup></td><td class="num hm pos" style="--a:0.76">0,76<sup>***</sup></td><td class="num muted">—</td><td class="num muted"></td></tr><tr><th>Bijgewoond (0–4)</th><td class="num hm neg" style="--a:0.43">−0,43<sup>*</sup></td><td class="num hm pos" style="--a:0.43">0,43<sup>*</sup></td><td class="num hm pos" style="--a:0.64">0,64<sup>***</sup></td><td class="num muted">—</td></tr></tbody></table></div></div>
+  </div>
+  <div class="panel"><h4>Samenhang met deelname</h4><p class="cap">Elke stip is een respondent; de lijn is de regressielijn</p>
+    <div class="duo"><figure class="mini"><figcaption><span>Belemmeringen × Deelname</span><b>r = −0,56</b></figcaption><svg viewBox="0 0 320 260" class="chart" role="img" aria-label="Spreidingsdiagram Belemmeringen"><line x1="40" x2="308" y1="207.9" y2="207.9" class="grid"/><text x="34" y="211.9" class="tick" text-anchor="end">2</text><line x1="40" x2="308" y1="147.3" y2="147.3" class="grid"/><text x="34" y="151.3" class="tick" text-anchor="end">3</text><line x1="40" x2="308" y1="86.7" y2="86.7" class="grid"/><text x="34" y="90.7" class="tick" text-anchor="end">4</text><line x1="40" x2="308" y1="26.1" y2="26.1" class="grid"/><text x="34" y="30.1" class="tick" text-anchor="end">5</text><text x="40.0" y="236" class="tick" text-anchor="middle">1</text><text x="129.3" y="236" class="tick" text-anchor="middle">2</text><text x="218.7" y="236" class="tick" text-anchor="middle">3</text><text x="308.0" y="236" class="tick" text-anchor="middle">4</text><line x1="40.0" y1="37.4" x2="293.1" y2="146.8" class="trend"/><circle cx="296.7" cy="89.8" r="5" class="dot s1"><title>Belemmeringen: 3,83 · Deelname: 4,00</title></circle><circle cx="145.0" cy="97.5" r="5" class="dot s1"><title>Belemmeringen: 2,17 · Deelname: 3,83</title></circle><circle cx="54.1" cy="36.5" r="5" class="dot s1"><title>Belemmeringen: 1,17 · Deelname: 4,83</title></circle><circle cx="110.8" cy="26.4" r="5" class="dot s1"><title>Belemmeringen: 1,83 · Deelname: 5,00</title></circle><circle cx="157.5" cy="42.3" r="5" class="dot s1"><title>Belemmeringen: 2,33 · Deelname: 4,67</title></circle><circle cx="85.1" cy="56.8" r="5" class="dot s1"><title>Belemmeringen: 1,50 · Deelname: 4,50</title></circle><circle cx="277.7" cy="127.9" r="5" class="dot s1"><title>Belemmeringen: 3,67 · Deelname: 3,33</title></circle><circle cx="127.4" cy="36.7" r="5" class="dot s1"><title>Belemmeringen: 2,00 · Deelname: 4,83</title></circle><circle cx="189.8" cy="177.9" r="5" class="dot s1"><title>Belemmeringen: 2,67 · Deelname: 2,50</title></circle><circle cx="160.8" cy="177.8" r="5" class="dot s1"><title>Belemmeringen: 2,33 · Deelname: 2,50</title></circle><circle cx="233.6" cy="165.6" r="5" class="dot s1"><title>Belemmeringen: 3,17 · Deelname: 2,67</title></circle><circle cx="55.9" cy="67.1" r="5" class="dot s1"><title>Belemmeringen: 1,17 · Deelname: 4,33</title></circle><circle cx="173.7" cy="207.2" r="5" class="dot s1"><title>Belemmeringen: 2,50 · Deelname: 2,00</title></circle><circle cx="296.5" cy="97.2" r="5" class="dot s1"><title>Belemmeringen: 3,83 · Deelname: 3,83</title></circle><circle cx="114.0" cy="166.3" r="5" class="dot s1"><title>Belemmeringen: 1,83 · Deelname: 2,67</title></circle><circle cx="276.7" cy="127.5" r="5" class="dot s1"><title>Belemmeringen: 3,67 · Deelname: 3,33</title></circle><circle cx="160.7" cy="25.4" r="5" class="dot s1"><title>Belemmeringen: 2,33 · Deelname: 5,00</title></circle><circle cx="218.8" cy="116.2" r="5" class="dot s1"><title>Belemmeringen: 3,00 · Deelname: 3,50</title></circle><circle cx="154.0" cy="85.5" r="5" class="dot s1"><title>Belemmeringen: 2,33 · Deelname: 4,00</title></circle><circle cx="127.6" cy="209.9" r="5" class="dot s1"><title>Belemmeringen: 2,00 · Deelname: 2,00</title></circle><circle cx="40.5" cy="25.3" r="5" class="dot s1"><title>Belemmeringen: 1,00 · Deelname: 5,00</title></circle><circle cx="54.1" cy="27.4" r="5" class="dot s1"><title>Belemmeringen: 1,17 · Deelname: 5,00</title></circle><circle cx="69.8" cy="26.2" r="5" class="dot s1"><title>Belemmeringen: 1,33 · Deelname: 5,00</title></circle><circle cx="42.5" cy="25.2" r="5" class="dot s1"><title>Belemmeringen: 1,00 · Deelname: 5,00</title></circle><circle cx="129.7" cy="24.8" r="5" class="dot s1"><title>Belemmeringen: 2,00 · Deelname: 5,00</title></circle><circle cx="158.7" cy="67.7" r="5" class="dot s1"><title>Belemmeringen: 2,33 · Deelname: 4,33</title></circle><circle cx="85.7" cy="55.7" r="5" class="dot s1"><title>Belemmeringen: 1,50 · Deelname: 4,50</title></circle><circle cx="39.6" cy="27.1" r="5" class="dot s1"><title>Belemmeringen: 1,00 · Deelname: 5,00</title></circle><circle cx="100.0" cy="29.1" r="5" class="dot s1"><title>Belemmeringen: 1,67 · Deelname: 5,00</title></circle><circle cx="41.2" cy="25.5" r="5" class="dot s1"><title>Belemmeringen: 1,00 · Deelname: 5,00</title></circle><circle cx="66.8" cy="26.0" r="5" class="dot s1"><title>Belemmeringen: 1,33 · Deelname: 5,00</title></circle><circle cx="127.6" cy="85.8" r="5" class="dot s1"><title>Belemmeringen: 2,00 · Deelname: 4,00</title></circle><circle cx="36.4" cy="27.2" r="5" class="dot s1"><title>Belemmeringen: 1,00 · Deelname: 5,00</title></circle><circle cx="160.3" cy="75.2" r="5" class="dot s1"><title>Belemmeringen: 2,33 · Deelname: 4,17</title></circle><circle cx="110.6" cy="46.9" r="5" class="dot s1"><title>Belemmeringen: 1,83 · Deelname: 4,67</title></circle><text x="174.0" y="256" class="as" text-anchor="middle">Belemmeringen</text></svg></figure><figure class="mini"><figcaption><span>Verplichting × Deelname</span><b>r = 0,76</b></figcaption><svg viewBox="0 0 320 260" class="chart" role="img" aria-label="Spreidingsdiagram Verplichting"><line x1="40" x2="308" y1="207.9" y2="207.9" class="grid"/><text x="34" y="211.9" class="tick" text-anchor="end">2</text><line x1="40" x2="308" y1="147.3" y2="147.3" class="grid"/><text x="34" y="151.3" class="tick" text-anchor="end">3</text><line x1="40" x2="308" y1="86.7" y2="86.7" class="grid"/><text x="34" y="90.7" class="tick" text-anchor="end">4</text><line x1="40" x2="308" y1="26.1" y2="26.1" class="grid"/><text x="34" y="30.1" class="tick" text-anchor="end">5</text><text x="40.0" y="236" class="tick" text-anchor="middle">2,5</text><text x="93.6" y="236" class="tick" text-anchor="middle">3,0</text><text x="147.2" y="236" class="tick" text-anchor="middle">3,5</text><text x="200.8" y="236" class="tick" text-anchor="middle">4,0</text><text x="254.4" y="236" class="tick" text-anchor="middle">4,5</text><text x="308.0" y="236" class="tick" text-anchor="middle">5,0</text><line x1="57.9" y1="202.8" x2="308.0" y2="27.1" class="trend"/><circle cx="276.7" cy="89.8" r="5" class="dot s1"><title>Verplichting: 4,67 · Deelname: 4,00</title></circle><circle cx="201.7" cy="97.5" r="5" class="dot s1"><title>Verplichting: 4,00 · Deelname: 3,83</title></circle><circle cx="217.7" cy="36.5" r="5" class="dot s1"><title>Verplichting: 4,17 · Deelname: 4,83</title></circle><circle cx="303.7" cy="26.4" r="5" class="dot s1"><title>Verplichting: 5,00 · Deelname: 5,00</title></circle><circle cx="288.2" cy="42.3" r="5" class="dot s1"><title>Verplichting: 4,83 · Deelname: 4,67</title></circle><circle cx="219.2" cy="56.8" r="5" class="dot s1"><title>Verplichting: 4,17 · Deelname: 4,50</title></circle><circle cx="218.1" cy="127.9" r="5" class="dot s1"><title>Verplichting: 4,17 · Deelname: 3,33</title></circle><circle cx="305.7" cy="36.7" r="5" class="dot s1"><title>Verplichting: 5,00 · Deelname: 4,83</title></circle><circle cx="112.5" cy="177.9" r="5" class="dot s1"><title>Verplichting: 3,17 · Deelname: 2,50</title></circle><circle cx="60.0" cy="177.8" r="5" class="dot s1"><title>Verplichting: 2,67 · Deelname: 2,50</title></circle><circle cx="129.3" cy="165.6" r="5" class="dot s1"><title>Verplichting: 3,33 · Deelname: 2,67</title></circle><circle cx="219.9" cy="67.1" r="5" class="dot s1"><title>Verplichting: 4,17 · Deelname: 4,33</title></circle><circle cx="218.3" cy="207.2" r="5" class="dot s1"><title>Verplichting: 4,17 · Deelname: 2,00</title></circle><circle cx="240.6" cy="97.2" r="5" class="dot s1"><title>Verplichting: 4,33 · Deelname: 3,83</title></circle><circle cx="93.1" cy="166.3" r="5" class="dot s1"><title>Verplichting: 3,00 · Deelname: 2,67</title></circle><circle cx="198.9" cy="127.5" r="5" class="dot s1"><title>Verplichting: 4,00 · Deelname: 3,33</title></circle><circle cx="274.2" cy="25.4" r="5" class="dot s1"><title>Verplichting: 4,67 · Deelname: 5,00</title></circle><circle cx="201.0" cy="116.2" r="5" class="dot s1"><title>Verplichting: 4,00 · Deelname: 3,50</title></circle><circle cx="230.4" cy="85.5" r="5" class="dot s1"><title>Verplichting: 4,33 · Deelname: 4,00</title></circle><circle cx="198.7" cy="209.9" r="5" class="dot s1"><title>Verplichting: 4,00 · Deelname: 2,00</title></circle><circle cx="308.6" cy="25.3" r="5" class="dot s1"><title>Verplichting: 5,00 · Deelname: 5,00</title></circle><circle cx="199.8" cy="27.4" r="5" class="dot s1"><title>Verplichting: 4,00 · Deelname: 5,00</title></circle><circle cx="308.1" cy="26.2" r="5" class="dot s1"><title>Verplichting: 5,00 · Deelname: 5,00</title></circle><circle cx="239.5" cy="25.2" r="5" class="dot s1"><title>Verplichting: 4,33 · Deelname: 5,00</title></circle><circle cx="290.5" cy="24.8" r="5" class="dot s1"><title>Verplichting: 4,83 · Deelname: 5,00</title></circle><circle cx="254.0" cy="67.7" r="5" class="dot s1"><title>Verplichting: 4,50 · Deelname: 4,33</title></circle><circle cx="255.7" cy="55.7" r="5" class="dot s1"><title>Verplichting: 4,50 · Deelname: 4,50</title></circle><circle cx="307.5" cy="27.1" r="5" class="dot s1"><title>Verplichting: 5,00 · Deelname: 5,00</title></circle><circle cx="272.8" cy="29.1" r="5" class="dot s1"><title>Verplichting: 4,67 · Deelname: 5,00</title></circle><circle cx="309.5" cy="25.5" r="5" class="dot s1"><title>Verplichting: 5,00 · Deelname: 5,00</title></circle><circle cx="286.6" cy="26.0" r="5" class="dot s1"><title>Verplichting: 4,83 · Deelname: 5,00</title></circle><circle cx="198.7" cy="85.8" r="5" class="dot s1"><title>Verplichting: 4,00 · Deelname: 4,00</title></circle><circle cx="232.1" cy="27.2" r="5" class="dot s1"><title>Verplichting: 4,33 · Deelname: 5,00</title></circle><circle cx="273.8" cy="75.2" r="5" class="dot s1"><title>Verplichting: 4,67 · Deelname: 4,17</title></circle><circle cx="285.5" cy="46.9" r="5" class="dot s1"><title>Verplichting: 4,83 · Deelname: 4,67</title></circle><text x="174.0" y="256" class="as" text-anchor="middle">Verplichting</text></svg></figure></div></div>
+  <details><summary>Steekproefkenmerken</summary><div><div class="tw"><table class=""><thead><tr><th class="">Kenmerk</th><th class="">Categorie</th><th class="num">n</th><th class="num">%</th></tr></thead><tbody><tr><td class="">Geslacht</td><td class="">Man</td><td class="num">31</td><td class="num">88,6</td></tr><tr><td class=""></td><td class="">Vrouw</td><td class="num">4</td><td class="num">11,4</td></tr><tr><td class="">Leeftijd</td><td class="">35–44 jaar</td><td class="num">10</td><td class="num">28,6</td></tr><tr><td class=""></td><td class="">25–34 jaar</td><td class="num">9</td><td class="num">25,7</td></tr><tr><td class=""></td><td class="">18–24 jaar</td><td class="num">7</td><td class="num">20,0</td></tr><tr><td class=""></td><td class="">45–54 jaar</td><td class="num">6</td><td class="num">17,1</td></tr><tr><td class=""></td><td class="">55–64 jaar</td><td class="num">3</td><td class="num">8,6</td></tr><tr><td class="">Achtergrond</td><td class="">Turks</td><td class="num">18</td><td class="num">51,4</td></tr><tr><td class=""></td><td class="">Marokkaans</td><td class="num">9</td><td class="num">25,7</td></tr><tr><td class=""></td><td class="">Nederlands</td><td class="num">3</td><td class="num">8,6</td></tr><tr><td class=""></td><td class="">Anders</td><td class="num">2</td><td class="num">5,7</td></tr><tr><td class=""></td><td class="">Egyptisch</td><td class="num">1</td><td class="num">2,9</td></tr><tr><td class=""></td><td class="">Afghaans</td><td class="num">1</td><td class="num">2,9</td></tr><tr><td class=""></td><td class="">Surinaams</td><td class="num">1</td><td class="num">2,9</td></tr><tr><td class="">Gebruikelijke vrijdag</td><td class="">Ik werk op vrijdag</td><td class="num">18</td><td class="num">51,4</td></tr><tr><td class=""></td><td class="">Ik heb doorgaans geen werk of studie op vrijdag</td><td class="num">9</td><td class="num">25,7</td></tr><tr><td class=""></td><td class="">Mijn vrijdag wisselt per week</td><td class="num">5</td><td class="num">14,3</td></tr><tr><td class=""></td><td class="">Ik werk en studeer op vrijdag</td><td class="num">3</td><td class="num">8,6</td></tr><tr><td class="">Rechtsschool</td><td class="">Hanafi</td><td class="num">22</td><td class="num">62,9</td></tr><tr><td class=""></td><td class="">Maliki</td><td class="num">8</td><td class="num">22,9</td></tr><tr><td class=""></td><td class="">Ik volg geen specifieke rechtsschool</td><td class="num">2</td><td class="num">5,7</td></tr><tr><td class=""></td><td class="">Ik weet het niet</td><td class="num">1</td><td class="num">2,9</td></tr><tr><td class=""></td><td class="">Shafi‘i</td><td class="num">1</td><td class="num">2,9</td></tr><tr><td class=""></td><td class="">Hanbali</td><td class="num">1</td><td class="num">2,9</td></tr></tbody></table></div></div></details>
+  <p>De steekproef bestaat vooral uit mannen (89%) met een Turkse (51%) of Marokkaanse (26%) achtergrond. De meesten werken op vrijdag. Verplichting en deelname zijn links-scheef verdeeld: de meeste respondenten scoren hoog, wat een plafondeffect geeft.</p>
+</section>
+
+<section id="kmo">
+  <div class="num-h">03</div>
+  <h2>KMO en Bartlett</h2>
+  <p class="intro">Zijn de items geschikt voor factoranalyse? De Kaiser-Meyer-Olkin-maat (KMO) geeft aan hoeveel gedeelde variantie de items hebben. Bartlett's toets controleert of de items überhaupt correleren.</p>
+  <div class="panel"><div class="tw"><table class=""><thead><tr><th class="">Schaal</th><th class="num">Items</th><th class="num">KMO</th><th class="num">Bartlett χ²</th><th class="num">df</th><th class="num">p</th></tr></thead><tbody><tr><td class="">Praktische belemmeringen</td><td class="num">6</td><td class="num">0,71</td><td class="num">91,2</td><td class="num">15</td><td class="num">&lt; ,001</td></tr><tr><td class="">Ervaren religieuze verplichting</td><td class="num">6</td><td class="num">0,77</td><td class="num">58,4</td><td class="num">15</td><td class="num">&lt; ,001</td></tr><tr><td class="">Deelname aan Jumuʿah</td><td class="num">6</td><td class="num">0,81</td><td class="num">159,1</td><td class="num">15</td><td class="num">&lt; ,001</td></tr><tr><td class="">Alle 18 items</td><td class="num">18</td><td class="num">0,66</td><td class="num">516,2</td><td class="num">153</td><td class="num">&lt; ,001</td></tr></tbody></table></div></div>
+  <div class="callout">Per schaal is de KMO <b>middelmatig tot verdienstelijk (0,71–0,81)</b> en Bartlett's toets is overal significant. Elke schaal is dus geschikt voor factoranalyse. Over alle 18 items samen daalt de KMO naar 0,66. Met 35 respondenten op 18 items is een gezamenlijke analyse daarom alleen verkennend.</div>
+</section>
+
+<section id="fa">
+  <div class="num-h">04</div>
+  <h2>Factoranalyse</h2>
+  <p class="intro">Principale-assenfactoranalyse (principal axis factoring). Het aantal factoren is bepaald met parallelle analyse (Horn; 95e percentiel van 1000 random datasets).</p>
+  <h3>Per schaal: eendimensionaal</h3>
+  <p>Voor alle drie de schalen adviseert de parallelle analyse <b>één factor</b>. De eerste factor verklaart 55% (belemmeringen), 48% (verplichting) en 71% (deelname) van de variantie. Alle ladingen liggen ≥ 0,55, behalve M2 (0,41). De ladingen staan in de itemtabel onder <a href="#betr">Betrouwbaarheid</a>.</p>
+  <h3>Alle 18 items samen (verkennend)</h3>
+  <div class="panel"><h4>Scree-plot met parallelle analyse</h4><p class="cap">Gevulde punten liggen boven de random-lijn en tellen als 'echte' factor</p>
+    <svg viewBox="0 0 640 300" class="chart scree" role="img" aria-label="Scree-plot"><line x1="44" x2="624" y1="260.0" y2="260.0" class="grid"/><text x="36" y="264.0" class="tick" text-anchor="end">0</text><line x1="44" x2="624" y1="202.6" y2="202.6" class="grid"/><text x="36" y="206.6" class="tick" text-anchor="end">2</text><line x1="44" x2="624" y1="145.2" y2="145.2" class="grid"/><text x="36" y="149.2" class="tick" text-anchor="end">4</text><line x1="44" x2="624" y1="87.8" y2="87.8" class="grid"/><text x="36" y="91.8" class="tick" text-anchor="end">6</text><line x1="44" x2="624" y1="30.4" y2="30.4" class="grid"/><text x="36" y="34.4" class="tick" text-anchor="end">8</text><text x="44.0" y="278" class="tick" text-anchor="middle">1</text><text x="78.1" y="278" class="tick" text-anchor="middle">2</text><text x="112.2" y="278" class="tick" text-anchor="middle">3</text><text x="146.4" y="278" class="tick" text-anchor="middle">4</text><text x="180.5" y="278" class="tick" text-anchor="middle">5</text><text x="214.6" y="278" class="tick" text-anchor="middle">6</text><text x="248.7" y="278" class="tick" text-anchor="middle">7</text><text x="282.8" y="278" class="tick" text-anchor="middle">8</text><text x="316.9" y="278" class="tick" text-anchor="middle">9</text><text x="351.1" y="278" class="tick" text-anchor="middle">10</text><text x="385.2" y="278" class="tick" text-anchor="middle">11</text><text x="419.3" y="278" class="tick" text-anchor="middle">12</text><text x="453.4" y="278" class="tick" text-anchor="middle">13</text><text x="487.5" y="278" class="tick" text-anchor="middle">14</text><text x="521.6" y="278" class="tick" text-anchor="middle">15</text><text x="555.8" y="278" class="tick" text-anchor="middle">16</text><text x="589.9" y="278" class="tick" text-anchor="middle">17</text><text x="624.0" y="278" class="tick" text-anchor="middle">18</text><line x1="44" x2="624" y1="231.3" y2="231.3" class="ref"/><text x="624" y="225.3" class="tick" text-anchor="end">Kaiser = 1</text><polyline points="44.0,177.9 78.1,191.2 112.2,200.4 146.4,207.1 180.5,213.1 214.6,218.5 248.7,222.9 282.8,227.0 316.9,230.9 351.1,234.6 385.2,237.8 419.3,240.7 453.4,243.7 487.5,246.4 521.6,248.7 555.8,251.0 589.9,253.3 624.0,255.3" class="lijn s2" stroke-dasharray="6 4"/><polyline points="44.0,33.3 78.1,185.2 112.2,221.9 146.4,227.3 180.5,230.0 214.6,234.4 248.7,238.3 282.8,243.4 316.9,245.8 351.1,251.0 385.2,252.8 419.3,254.0 453.4,255.4 487.5,256.2 521.6,257.2 555.8,258.4 589.9,259.0 624.0,259.6" class="lijn s1"/><circle cx="44.0" cy="33.3" r="4.5" class="dot s1 boven"><title>Factor 1: eigenwaarde 7,90 (parallel: 2,86)</title></circle><circle cx="78.1" cy="185.2" r="4.5" class="dot s1 boven"><title>Factor 2: eigenwaarde 2,61 (parallel: 2,40)</title></circle><circle cx="112.2" cy="221.9" r="4.5" class="dot s1 "><title>Factor 3: eigenwaarde 1,33 (parallel: 2,08)</title></circle><circle cx="146.4" cy="227.3" r="4.5" class="dot s1 "><title>Factor 4: eigenwaarde 1,14 (parallel: 1,84)</title></circle><circle cx="180.5" cy="230.0" r="4.5" class="dot s1 "><title>Factor 5: eigenwaarde 1,04 (parallel: 1,63)</title></circle><circle cx="214.6" cy="234.4" r="4.5" class="dot s1 "><title>Factor 6: eigenwaarde 0,89 (parallel: 1,45)</title></circle><circle cx="248.7" cy="238.3" r="4.5" class="dot s1 "><title>Factor 7: eigenwaarde 0,75 (parallel: 1,29)</title></circle><circle cx="282.8" cy="243.4" r="4.5" class="dot s1 "><title>Factor 8: eigenwaarde 0,58 (parallel: 1,15)</title></circle><circle cx="316.9" cy="245.8" r="4.5" class="dot s1 "><title>Factor 9: eigenwaarde 0,50 (parallel: 1,01)</title></circle><circle cx="351.1" cy="251.0" r="4.5" class="dot s1 "><title>Factor 10: eigenwaarde 0,31 (parallel: 0,88)</title></circle><circle cx="385.2" cy="252.8" r="4.5" class="dot s1 "><title>Factor 11: eigenwaarde 0,25 (parallel: 0,77)</title></circle><circle cx="419.3" cy="254.0" r="4.5" class="dot s1 "><title>Factor 12: eigenwaarde 0,21 (parallel: 0,67)</title></circle><circle cx="453.4" cy="255.4" r="4.5" class="dot s1 "><title>Factor 13: eigenwaarde 0,16 (parallel: 0,57)</title></circle><circle cx="487.5" cy="256.2" r="4.5" class="dot s1 "><title>Factor 14: eigenwaarde 0,13 (parallel: 0,47)</title></circle><circle cx="521.6" cy="257.2" r="4.5" class="dot s1 "><title>Factor 15: eigenwaarde 0,10 (parallel: 0,39)</title></circle><circle cx="555.8" cy="258.4" r="4.5" class="dot s1 "><title>Factor 16: eigenwaarde 0,05 (parallel: 0,31)</title></circle><circle cx="589.9" cy="259.0" r="4.5" class="dot s1 "><title>Factor 17: eigenwaarde 0,04 (parallel: 0,23)</title></circle><circle cx="624.0" cy="259.6" r="4.5" class="dot s1 "><title>Factor 18: eigenwaarde 0,01 (parallel: 0,16)</title></circle><text x="334.0" y="296" class="as" text-anchor="middle">Factor</text></svg>
+    <div class="legend"><span><i style="background:var(--s1)"></i>Geobserveerde eigenwaarden</span><span><i style="background:var(--s2)"></i>Parallelle analyse (95e pct.)</span></div></div>
+  <div class="panel"><h4>Driefactoroplossing (oblimin-rotatie)</h4><p class="cap">Alleen ladingen ≥ |0,30| getoond; kleurintensiteit = sterkte</p><div class="tw"><table class="efa"><thead><tr><th>Item</th><th>Omschrijving</th><th class="num">F1<br><small>Verplichting + Deelname</small></th><th class="num">F2<br><small>Toegang / drempel</small></th><th class="num">F3<br><small>Roosterconflict</small></th></tr></thead><tbody><tr class="gX"><td><b>X1</b></td><td>Werk/studie/verplichtingen maken Jumuʿah lastig</td><td class="num"></td><td class="num"></td><td class="num ld" style="--a:0.89">0,89</td></tr><tr class="gX"><td><b>X2 (r)</b></td><td>Kan vrijdag zo indelen dat er tijd is (r)</td><td class="num"></td><td class="num"></td><td class="num ld" style="--a:0.90">0,90</td></tr><tr class="gX"><td><b>X3</b></td><td>Bezwaard om ruimte te vragen</td><td class="num"></td><td class="num ld" style="--a:0.76">0,76</td><td class="num ld" style="--a:0.31">0,31</td></tr><tr class="gX"><td><b>X4</b></td><td>Reis kost te veel tijd</td><td class="num"></td><td class="num ld" style="--a:0.83">0,83</td><td class="num"></td></tr><tr class="gX"><td><b>X5 (r)</b></td><td>Geschikte plek goed bereikbaar (r)</td><td class="num"></td><td class="num ld" style="--a:0.61">0,61</td><td class="num"></td></tr><tr class="gX"><td><b>X6</b></td><td>Tijdstip botst met andere verplichtingen</td><td class="num"></td><td class="num ld" style="--a:0.44">0,44</td><td class="num ld" style="--a:0.53">0,53</td></tr><tr class="gM"><td><b>M1</b></td><td>Meer dan gewoonte; religieuze plicht</td><td class="num ld" style="--a:0.72">0,72</td><td class="num"></td><td class="num"></td></tr><tr class="gM"><td><b>M2 (r)</b></td><td>Vooral iets wat ik zelf kan kiezen (r)</td><td class="num ld" style="--a:0.56">0,56</td><td class="num"></td><td class="num ld" style="--a:0.38">0,38</td></tr><tr class="gM"><td><b>M3</b></td><td>Ook bij volle agenda gaat Jumuʿah voor</td><td class="num ld" style="--a:0.96">0,96</td><td class="num"></td><td class="num"></td></tr><tr class="gM"><td><b>M4 (r)</b></td><td>Drukke dag is voldoende reden om over te slaan (r)</td><td class="num ld" style="--a:0.70">0,70</td><td class="num"></td><td class="num"></td></tr><tr class="gM"><td><b>M5</b></td><td>Missen zonder geldige reden zit me dwars</td><td class="num"></td><td class="num"></td><td class="num ld" style="--a:0.35">−0,35</td></tr><tr class="gM"><td><b>M6 (r)</b></td><td>Een keer missen religieus niet zo belangrijk (r)</td><td class="num ld" style="--a:0.61">0,61</td><td class="num ld" style="--a:0.36">0,36</td><td class="num"></td></tr><tr class="gY"><td><b>Y1</b></td><td>Woon vrijwel iedere vrijdag bij</td><td class="num ld" style="--a:0.53">0,53</td><td class="num"></td><td class="num ld" style="--a:0.52">−0,52</td></tr><tr class="gY"><td><b>Y2 (r)</b></td><td>Kom regelmatig voor dat ik niet bijwoon (r)</td><td class="num ld" style="--a:0.40">0,40</td><td class="num"></td><td class="num ld" style="--a:0.60">−0,60</td></tr><tr class="gY"><td><b>Y3 (r)</b></td><td>Bij drukke vrijdag sla ik soms over (r)</td><td class="num ld" style="--a:0.77">0,77</td><td class="num"></td><td class="num"></td></tr><tr class="gY"><td><b>Y4</b></td><td>Regel vooraf waar en wanneer</td><td class="num ld" style="--a:0.76">0,76</td><td class="num"></td><td class="num"></td></tr><tr class="gY"><td><b>Y5</b></td><td>Zoek andere plek als ik onderweg ben</td><td class="num ld" style="--a:0.80">0,80</td><td class="num"></td><td class="num"></td></tr><tr class="gY"><td><b>Y6</b></td><td>Zoek alsnog een manier bij onverwachte zaken</td><td class="num ld" style="--a:0.87">0,87</td><td class="num"></td><td class="num"></td></tr></tbody></table></div></div>
+  <div class="callout warm"><b>De verwachte drie-schalenstructuur komt niet zuiver terug.</b> Verplichting en deelname laden samen op één factor (F1). Belemmeringen splitst in <i>roosterconflict</i> (X1, X2, X6) en <i>toegang/drempel</i> (X3 bezwaard om te vragen, X4 reistijd, X5 bereikbaarheid). Parallelle analyse adviseert maar twee factoren. De theoretische schalen worden verder gebruikt omdat elke schaal afzonderlijk eendimensionaal en betrouwbaar is. De overlap tussen M en Y is wel een beperking.</div>
+</section>
+
+<section id="betr">
+  <div class="num-h">05</div>
+  <h2>Betrouwbaarheidsanalyse</h2>
+  <div class="panel"><div class="tw"><table class=""><thead><tr><th class="">Schaal</th><th class="num">Items</th><th class="num">α</th><th class="num">95%-BI</th><th class="num">Gem. inter-item r</th></tr></thead><tbody><tr><td class="">Praktische belemmeringen</td><td class="num">6</td><td class="num">0,83</td><td class="num">[0,72; 0,90]</td><td class="num">0,45</td></tr><tr><td class="">Ervaren religieuze verplichting</td><td class="num">6</td><td class="num">0,70</td><td class="num">[0,51; 0,83]</td><td class="num">0,36</td></tr><tr><td class="">Deelname aan Jumuʿah</td><td class="num">6</td><td class="num">0,91</td><td class="num">[0,85; 0,95]</td><td class="num">0,65</td></tr></tbody></table></div><p class="cap" style="margin-top:8px">95%-betrouwbaarheidsinterval volgens Feldt</p></div>
+  <p>Belemmeringen (α = 0,83) en deelname (α = 0,91) zijn goed tot uitstekend. Ervaren verplichting zit met α = 0,70 op de grens van acceptabel. Zonder item M2 ("Ik zie Jumuʿah vooral als iets wat ik zelf kan kiezen") stijgt α naar <b>0,772</b>. Dat item meet waarschijnlijk keuzebeleving in plaats van verplichting: iets kan tegelijk als plicht én als eigen keuze voelen.</p>
+  <details open><summary>Itemstatistieken en factorladingen</summary><div><div class="tw"><table class=""><thead><tr><th class="">Schaal</th><th class="">Item</th><th class="">Omschrijving</th><th class="num">M</th><th class="num">SD</th><th class="num">Lading</th><th class="num">Item-rest r</th><th class="num">α als verwijderd</th></tr></thead><tbody><tr><td class="">X</td><td class="">X1</td><td class="">Werk/studie/verplichtingen maken Jumuʿah lastig</td><td class="num">2,11</td><td class="num">1,41</td><td class="num">0,82</td><td class="num">0,68</td><td class="num">0,783</td></tr><tr><td class="">X</td><td class="">X2 (r)</td><td class="">Kan vrijdag zo indelen dat er tijd is (r)</td><td class="num">1,80</td><td class="num">1,02</td><td class="num">0,72</td><td class="num">0,57</td><td class="num">0,806</td></tr><tr><td class="">X</td><td class="">X3</td><td class="">Bezwaard om ruimte te vragen</td><td class="num">2,60</td><td class="num">1,31</td><td class="num">0,83</td><td class="num">0,72</td><td class="num">0,772</td></tr><tr><td class="">X</td><td class="">X4</td><td class="">Reis kost te veel tijd</td><td class="num">1,97</td><td class="num">1,12</td><td class="num">0,60</td><td class="num">0,47</td><td class="num">0,825</td></tr><tr><td class="">X</td><td class="">X5 (r)</td><td class="">Geschikte plek goed bereikbaar (r)</td><td class="num">1,77</td><td class="num">1,03</td><td class="num">0,57</td><td class="num">0,44</td><td class="num">0,830</td></tr><tr><td class="">X</td><td class="">X6</td><td class="">Tijdstip botst met andere verplichtingen</td><td class="num">2,06</td><td class="num">1,00</td><td class="num">0,85</td><td class="num">0,74</td><td class="num">0,776</td></tr><tr><td class="">M</td><td class="">M1</td><td class="">Meer dan gewoonte; religieuze plicht</td><td class="num">4,69</td><td class="num">0,53</td><td class="num">0,80</td><td class="num">0,62</td><td class="num">0,637</td></tr><tr><td class="">M</td><td class="">M2 (r)</td><td class="">Vooral iets wat ik zelf kan kiezen (r)</td><td class="num">3,71</td><td class="num">1,47</td><td class="num">0,41</td><td class="num hl">0,27</td><td class="num">0,772</td></tr><tr><td class="">M</td><td class="">M3</td><td class="">Ook bij volle agenda gaat Jumuʿah voor</td><td class="num">4,40</td><td class="num">0,81</td><td class="num">0,89</td><td class="num">0,71</td><td class="num">0,575</td></tr><tr><td class="">M</td><td class="">M4 (r)</td><td class="">Drukke dag is voldoende reden om over te slaan (r)</td><td class="num">4,20</td><td class="num">0,76</td><td class="num">0,75</td><td class="num">0,54</td><td class="num">0,631</td></tr><tr><td class="">M</td><td class="">M5</td><td class="">Missen zonder geldige reden zit me dwars</td><td class="num">4,57</td><td class="num">0,88</td><td class="num">0,55</td><td class="num">0,34</td><td class="num">0,682</td></tr><tr><td class="">M</td><td class="">M6 (r)</td><td class="">Een keer missen religieus niet zo belangrijk (r)</td><td class="num">4,37</td><td class="num">0,91</td><td class="num">0,67</td><td class="num">0,44</td><td class="num">0,653</td></tr><tr><td class="">Y</td><td class="">Y1</td><td class="">Woon vrijwel iedere vrijdag bij</td><td class="num">4,00</td><td class="num">1,39</td><td class="num">0,84</td><td class="num">0,78</td><td class="num">0,892</td></tr><tr><td class="">Y</td><td class="">Y2 (r)</td><td class="">Kom regelmatig voor dat ik niet bijwoon (r)</td><td class="num">4,03</td><td class="num">1,32</td><td class="num">0,82</td><td class="num">0,76</td><td class="num">0,894</td></tr><tr><td class="">Y</td><td class="">Y3 (r)</td><td class="">Bij drukke vrijdag sla ik soms over (r)</td><td class="num">4,06</td><td class="num">1,24</td><td class="num">0,87</td><td class="num">0,79</td><td class="num">0,888</td></tr><tr><td class="">Y</td><td class="">Y4</td><td class="">Regel vooraf waar en wanneer</td><td class="num">4,17</td><td class="num">1,10</td><td class="num">0,83</td><td class="num">0,73</td><td class="num">0,896</td></tr><tr><td class="">Y</td><td class="">Y5</td><td class="">Zoek andere plek als ik onderweg ben</td><td class="num">4,29</td><td class="num">0,86</td><td class="num">0,77</td><td class="num">0,66</td><td class="num">0,908</td></tr><tr><td class="">Y</td><td class="">Y6</td><td class="">Zoek alsnog een manier bij onverwachte zaken</td><td class="num">4,31</td><td class="num">0,96</td><td class="num">0,92</td><td class="num">0,86</td><td class="num">0,883</td></tr></tbody></table></div></div></details>
+</section>
+
+<section id="kruis">
+  <div class="num-h">06</div>
+  <h2>Kruistabellen</h2>
+  <p class="intro">Uitkomst: <b>volledige deelname</b>, dat wil zeggen alle vier de laatste vrijdaggebeden bijgewoond. Categorieën zijn samengevoegd tot 2×2-tabellen en getoetst met Fisher's exacte toets. Effectmaat φ: 0,10 klein, 0,30 middelgroot, 0,50 groot.</p>
+  <div class="kaarten"><article class="kaart sig">
+          <header><h4>Geslacht</h4><span class="badge ja">significant</span></header>
+          <p class="sub">% dat woonde alle 4 bij</p>
+          <div class="kb"><div class="kbl"><span>Man</span><span class="muted">20/30</span></div>
+              <div class="track"><div class="fill" style="width:66.7%"></div><span class="pv">67%</span></div></div><div class="kb"><div class="kbl"><span>Vrouw</span><span class="muted">0/4</span></div>
+              <div class="track"><div class="fill" style="width:0.0%"></div><span class="pv">0%</span></div></div>
+          <footer>Fisher p = ,022 · φ = 0,44 · n = 34</footer>
+        </article>
+<article class="kaart ">
+          <header><h4>Werk of studie op vrijdag</h4><span class="badge ">n.s.</span></header>
+          <p class="sub">% dat woonde alle 4 bij</p>
+          <div class="kb"><div class="kbl"><span>Geen werk/studie</span><span class="muted">6/9</span></div>
+              <div class="track"><div class="fill" style="width:66.7%"></div><span class="pv">67%</span></div></div><div class="kb"><div class="kbl"><span>Werk/studie op vrijdag</span><span class="muted">14/25</span></div>
+              <div class="track"><div class="fill" style="width:56.0%"></div><span class="pv">56%</span></div></div>
+          <footer>Fisher p = ,704 · φ = 0,10 · n = 34</footer>
+        </article>
+<article class="kaart sig">
+          <header><h4>Vrijheid om te onderbreken</h4><span class="badge ja">significant</span></header>
+          <p class="sub">% dat woonde alle 4 bij</p>
+          <div class="kb"><div class="kbl"><span>Hooguit enige</span><span class="muted">1/8</span></div>
+              <div class="track"><div class="fill" style="width:12.5%"></div><span class="pv">12%</span></div></div><div class="kb"><div class="kbl"><span>Veel/volledig</span><span class="muted">16/22</span></div>
+              <div class="track"><div class="fill" style="width:72.7%"></div><span class="pv">73%</span></div></div>
+          <footer>Fisher p = ,009 · φ = 0,54 · n = 30</footer>
+        </article>
+<article class="kaart ">
+          <header><h4>Reistijd naar Jumuʿah</h4><span class="badge ">n.s.</span></header>
+          <p class="sub">% dat woonde alle 4 bij</p>
+          <div class="kb"><div class="kbl"><span>&lt; 10 min</span><span class="muted">11/15</span></div>
+              <div class="track"><div class="fill" style="width:73.3%"></div><span class="pv">73%</span></div></div><div class="kb"><div class="kbl"><span>≥ 10 min</span><span class="muted">9/19</span></div>
+              <div class="track"><div class="fill" style="width:47.4%"></div><span class="pv">47%</span></div></div>
+          <footer>Fisher p = ,171 · φ = 0,26 · n = 34</footer>
+        </article>
+<article class="kaart ">
+          <header><h4>Moskeebezoek buiten Jumuʿah</h4><span class="badge ">n.s.</span></header>
+          <p class="sub">% dat woonde alle 4 bij</p>
+          <div class="kb"><div class="kbl"><span>Minder dan wekelijks</span><span class="muted">5/11</span></div>
+              <div class="track"><div class="fill" style="width:45.5%"></div><span class="pv">45%</span></div></div><div class="kb"><div class="kbl"><span>Minstens wekelijks</span><span class="muted">15/23</span></div>
+              <div class="track"><div class="fill" style="width:65.2%"></div><span class="pv">65%</span></div></div>
+          <footer>Fisher p = ,458 · φ = 0,19 · n = 34</footer>
+        </article>
+<article class="kaart sig">
+          <header><h4>Ervaren belemmeringen</h4><span class="badge ja">significant</span></header>
+          <p class="sub">% dat woonde alle 4 bij</p>
+          <div class="kb"><div class="kbl"><span>Hoog (&gt; mediaan)</span><span class="muted">5/15</span></div>
+              <div class="track"><div class="fill" style="width:33.3%"></div><span class="pv">33%</span></div></div><div class="kb"><div class="kbl"><span>Laag (≤ mediaan)</span><span class="muted">15/19</span></div>
+              <div class="track"><div class="fill" style="width:78.9%"></div><span class="pv">79%</span></div></div>
+          <footer>Fisher p = ,013 · φ = 0,46 · n = 34</footer>
+        </article>
+<article class="kaart sig">
+          <header><h4>Ervaren verplichting</h4><span class="badge ja">significant</span></header>
+          <p class="sub">% dat woonde alle 4 bij</p>
+          <div class="kb"><div class="kbl"><span>Hoog (&gt; mediaan)</span><span class="muted">13/16</span></div>
+              <div class="track"><div class="fill" style="width:81.2%"></div><span class="pv">81%</span></div></div><div class="kb"><div class="kbl"><span>Laag (≤ mediaan)</span><span class="muted">7/18</span></div>
+              <div class="track"><div class="fill" style="width:38.9%"></div><span class="pv">39%</span></div></div>
+          <footer>Fisher p = ,017 · φ = 0,43 · n = 34</footer>
+        </article>
+<article class="kaart sig">
+          <header><h4>Rechtsschool</h4><span class="badge ja">significant</span></header>
+          <p class="sub">% dat hoge verplichting</p>
+          <div class="kb"><div class="kbl"><span>Hanafi</span><span class="muted">14/22</span></div>
+              <div class="track"><div class="fill" style="width:63.6%"></div><span class="pv">64%</span></div></div><div class="kb"><div class="kbl"><span>Maliki</span><span class="muted">1/8</span></div>
+              <div class="track"><div class="fill" style="width:12.5%"></div><span class="pv">12%</span></div></div>
+          <footer>Fisher p = ,035 · φ = 0,45 · n = 30</footer>
+        </article></div>
+  <ul class="bul">
+    <li><b>Vrijheid om te onderbreken</b> is de sterkste praktische factor (φ = 0,54). Van de mensen met hooguit enige vrijheid woonde maar 1 op de 8 alle vier gebeden bij.</li>
+    <li><b>Of iemand op vrijdag werkt</b> maakt op zichzelf weinig uit (p = ,70). Het gaat om flexibiliteit, niet om het hebben van werk.</li>
+    <li><b>Geslacht:</b> geen van de vier vrouwen woonde alle vier gebeden bij. Dat past bij het fiqh-standpunt dat Jumuʿah voor vrouwen niet verplicht is. Daarom is de mediatie ook voor alleen mannen getoetst.</li>
+    <li><b>Rechtsschool:</b> Hanafi-respondenten scoren vaker hoog op verplichting dan Maliki-respondenten. Met 8 Maliki's, onder wie 2 vrouwen, en een overlap met achtergrond is dit niet causaal te duiden.</li>
+  </ul>
+</section>
+
+<section id="reg">
+  <div class="num-h">07</div>
+  <h2>Regressieanalyse</h2>
+  <p class="intro">Hiërarchische OLS-regressie op de deelnameschaal (n = 35), met HC3-robuuste standaardfouten. β is gestandaardiseerd; voor dummyvariabelen is dat B / SD<sub>Y</sub>.</p>
+  <div class="panel"><div class="tw"><table class="reg"><thead><tr><th rowspan="2">Predictor</th><th colspan="2" class="c">Model 1</th><th colspan="2" class="c">Model 2</th><th colspan="2" class="c">Model 3</th></tr><tr><th class="num">B (SE)</th><th class="num">β</th><th class="num">B (SE)</th><th class="num">β</th><th class="num">B (SE)</th><th class="num">β</th></tr></thead><tbody><tr><td>Constante</td><td class="num">5,45 (0,25)***</td><td class="num"></td><td class="num">0,40 (0,61)</td><td class="num"></td><td class="num">0,20 (1,23)</td><td class="num"></td></tr><tr><td>X Belemmeringen</td><td class="num">−0,64 (0,14)***</td><td class="num">−0,56</td><td class="num">−0,42 (0,09)***</td><td class="num">−0,37</td><td class="num">−0,32 (0,17)</td><td class="num">−0,28</td></tr><tr><td>M Verplichting</td><td class="num"></td><td class="num"></td><td class="num">1,06 (0,11)***</td><td class="num">0,65</td><td class="num">1,01 (0,31)**</td><td class="num">0,62</td></tr><tr><td>Geslacht (man = 1)</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">0,47 (0,76)</td><td class="num">0,49</td></tr><tr><td>Werk/studie op vrijdag (ja = 1)</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">−0,27 (0,30)</td><td class="num">−0,28</td></tr><tr class="foot"><td>R² (adj. R²)</td><td class="num">0,317 (0,296)</td><td class="num"></td><td class="num">0,707 (0,688)</td><td class="num"></td><td class="num">0,736 (0,701)</td><td class="num"></td></tr><tr class="foot"><td>ΔR²</td><td class="num">0,317</td><td class="num"></td><td class="num">0,390</td><td class="num"></td><td class="num">0,030</td><td class="num"></td></tr></tbody></table></div><p class="cap" style="margin-top:8px">* p &lt; ,05 · ** p &lt; ,01 · *** p &lt; ,001 · Model 1 → 2: F(1, 32) = 42,53, p < ,001; Model 2 → 3: F(2, 30) = 1,68, p = ,203</p></div>
+  <p>Belemmeringen alleen verklaren <b>32%</b> van de variantie in deelname. Met ervaren verplichting erbij loopt dat op naar <b>71%</b> (ΔR² = 0,39). Beide predictoren zijn uniek significant, en verplichting is duidelijk de sterkste (β = 0,65 tegenover −0,37). Geslacht en vrijdagwerk voegen niets significants toe.</p>
+  <details><summary>Assumpties en robuustheid (gedragsmaat 0–4)</summary><div>
+    <p>VIF = 1,10 (beide predictoren); Shapiro-Wilk residuen W = 0,750, p < ,001; Breusch-Pagan χ²(2) = 0,38, p = ,829; maximale Cook's D = 0,16 (2 cases boven 4/n). Er is geen multicollineariteit en geen heteroscedasticiteit. De residuen zijn niet normaal verdeeld door het plafondeffect; daarom zijn HC3-standaardfouten en bootstrapping gebruikt.</p>
+    <div class="tw"><table class=""><thead><tr><th class="">Predictor</th><th class="num">OLS B (SE)</th><th class="num">OLS p</th><th class="num">Binomiaal OR [95%-BI]</th><th class="num">Binomiaal p</th></tr></thead><tbody><tr><td class="">X Belemmeringen</td><td class="num">−0,50 (0,28)</td><td class="num">0,075</td><td class="num">0,45 [0,26; 0,76]</td><td class="num">0,003</td></tr><tr><td class="">M Verplichting</td><td class="num">0,71 (0,46)</td><td class="num">0,127</td><td class="num">2,90 [1,41; 5,99]</td><td class="num">0,004</td></tr></tbody></table></div>
+    <p class="cap" style="margin-top:8px">Uitkomst = aantal van de laatste 4 gebeden bijgewoond (n = 34). In het binomiale model halveert elk punt meer belemmeringen ruwweg de odds om een gebed bij te wonen; elk punt meer verplichting verdrievoudigt ze ongeveer.</p>
+  </div></details>
+</section>
+
+<section id="hayes">
+  <div class="num-h">08</div>
+  <h2>Hayes PROCESS Model 4</h2>
+  <p class="intro">Eenvoudige mediatie, gelijk aan PROCESS v4 Model 4. Het indirecte effect is getoetst met 5000 percentiel-bootstrapsteekproeven en is significant als het 95%-interval geen 0 bevat.</p>
+  <div class="panel"><div class="tw"><table class=""><thead><tr><th class="">Pad</th><th class="num">B</th><th class="num">SE</th><th class="num">t</th><th class="num">p</th><th class="num">95%-BI</th></tr></thead><tbody><tr><td class="">a  (X → M)</td><td class="num">−0,205</td><td class="num">0,116</td><td class="num">−1,77</td><td class="num">,086</td><td class="num">[−0,440; 0,030]</td></tr><tr><td class="">b  (M → Y | X)</td><td class="num">1,065</td><td class="num">0,163</td><td class="num">6,52</td><td class="num">&lt; ,001</td><td class="num">[0,732; 1,398]</td></tr><tr><td class="">c&#x27; (X → Y | M, direct)</td><td class="num">−0,419</td><td class="num">0,114</td><td class="num">−3,69</td><td class="num">&lt; ,001</td><td class="num">[−0,650; −0,188]</td></tr><tr><td class="">c  (X → Y, totaal)</td><td class="num">−0,637</td><td class="num">0,163</td><td class="num">−3,91</td><td class="num">&lt; ,001</td><td class="num">[−0,969; −0,306]</td></tr><tr><td class="">ab (indirect, bootstrap)</td><td class="num">−0,218</td><td class="num">0,104</td><td class="num"></td><td class="num"></td><td class="num">[−0,448; −0,037]</td></tr><tr><td class="">ab volledig gestandaardiseerd</td><td class="num">−0,193</td><td class="num"></td><td class="num"></td><td class="num"></td><td class="num">[−0,396; −0,033]</td></tr></tbody></table></div><p class="cap" style="margin-top:8px">Model M: R² = 0,087, F(1, 33) = 3,14, p = ,086; Model Y: R² = 0,707, F(2, 32) = 38,53, p < ,001</p></div>
+  <div class="panel"><h4>Bootstrapverdeling van het indirecte effect</h4><p class="cap">Het gekleurde gebied is het 95%-betrouwbaarheidsinterval; 0 valt erbuiten</p><svg viewBox="0 0 640 230" class="chart" role="img" aria-label="Bootstrapverdeling"><rect x="238.3" y="22" width="265.0" height="168" class="ciband"/><rect x="87.6" y="189.5" width="8.3" height="0.5" rx="1.5" class="bar uit"><title>−0,684 tot −0,668: 1 trekkingen</title></rect><rect x="97.9" y="188.6" width="8.3" height="1.4" rx="1.5" class="bar uit"><title>−0,668 tot −0,652: 3 trekkingen</title></rect><rect x="108.2" y="190.0" width="8.3" height="0.0" rx="1.5" class="bar uit"><title>−0,652 tot −0,636: 0 trekkingen</title></rect><rect x="118.6" y="187.7" width="8.3" height="2.3" rx="1.5" class="bar uit"><title>−0,636 tot −0,620: 5 trekkingen</title></rect><rect x="128.9" y="188.6" width="8.3" height="1.4" rx="1.5" class="bar uit"><title>−0,620 tot −0,604: 3 trekkingen</title></rect><rect x="139.2" y="189.5" width="8.3" height="0.5" rx="1.5" class="bar uit"><title>−0,604 tot −0,588: 1 trekkingen</title></rect><rect x="149.6" y="188.1" width="8.3" height="1.9" rx="1.5" class="bar uit"><title>−0,588 tot −0,572: 4 trekkingen</title></rect><rect x="159.9" y="185.8" width="8.3" height="4.2" rx="1.5" class="bar uit"><title>−0,572 tot −0,556: 9 trekkingen</title></rect><rect x="170.2" y="186.8" width="8.3" height="3.2" rx="1.5" class="bar uit"><title>−0,556 tot −0,540: 7 trekkingen</title></rect><rect x="180.5" y="187.2" width="8.3" height="2.8" rx="1.5" class="bar uit"><title>−0,540 tot −0,524: 6 trekkingen</title></rect><rect x="190.9" y="183.1" width="8.3" height="6.9" rx="1.5" class="bar uit"><title>−0,524 tot −0,508: 15 trekkingen</title></rect><rect x="201.2" y="180.3" width="8.3" height="9.7" rx="1.5" class="bar uit"><title>−0,508 tot −0,492: 21 trekkingen</title></rect><rect x="211.5" y="182.6" width="8.3" height="7.4" rx="1.5" class="bar uit"><title>−0,492 tot −0,476: 16 trekkingen</title></rect><rect x="221.8" y="182.1" width="8.3" height="7.9" rx="1.5" class="bar uit"><title>−0,476 tot −0,460: 17 trekkingen</title></rect><rect x="232.2" y="177.5" width="8.3" height="12.5" rx="1.5" class="bar uit"><title>−0,460 tot −0,444: 27 trekkingen</title></rect><rect x="242.5" y="173.3" width="8.3" height="16.7" rx="1.5" class="bar "><title>−0,444 tot −0,428: 36 trekkingen</title></rect><rect x="252.8" y="167.8" width="8.3" height="22.2" rx="1.5" class="bar "><title>−0,428 tot −0,411: 48 trekkingen</title></rect><rect x="263.2" y="157.6" width="8.3" height="32.4" rx="1.5" class="bar "><title>−0,411 tot −0,395: 70 trekkingen</title></rect><rect x="273.5" y="150.2" width="8.3" height="39.8" rx="1.5" class="bar "><title>−0,395 tot −0,379: 86 trekkingen</title></rect><rect x="283.8" y="140.5" width="8.3" height="49.5" rx="1.5" class="bar "><title>−0,379 tot −0,363: 107 trekkingen</title></rect><rect x="294.1" y="136.3" width="8.3" height="53.7" rx="1.5" class="bar "><title>−0,363 tot −0,347: 116 trekkingen</title></rect><rect x="304.5" y="128.0" width="8.3" height="62.0" rx="1.5" class="bar "><title>−0,347 tot −0,331: 134 trekkingen</title></rect><rect x="314.8" y="116.9" width="8.3" height="73.1" rx="1.5" class="bar "><title>−0,331 tot −0,315: 158 trekkingen</title></rect><rect x="325.1" y="104.8" width="8.3" height="85.2" rx="1.5" class="bar "><title>−0,315 tot −0,299: 184 trekkingen</title></rect><rect x="335.4" y="81.7" width="8.3" height="108.3" rx="1.5" class="bar "><title>−0,299 tot −0,283: 234 trekkingen</title></rect><rect x="345.8" y="72.0" width="8.3" height="118.0" rx="1.5" class="bar "><title>−0,283 tot −0,267: 255 trekkingen</title></rect><rect x="356.1" y="53.0" width="8.3" height="137.0" rx="1.5" class="bar "><title>−0,267 tot −0,251: 296 trekkingen</title></rect><rect x="366.4" y="52.5" width="8.3" height="137.5" rx="1.5" class="bar "><title>−0,251 tot −0,235: 297 trekkingen</title></rect><rect x="376.8" y="37.3" width="8.3" height="152.7" rx="1.5" class="bar "><title>−0,235 tot −0,219: 330 trekkingen</title></rect><rect x="387.1" y="41.4" width="8.3" height="148.6" rx="1.5" class="bar "><title>−0,219 tot −0,203: 321 trekkingen</title></rect><rect x="397.4" y="39.6" width="8.3" height="150.4" rx="1.5" class="bar "><title>−0,203 tot −0,187: 325 trekkingen</title></rect><rect x="407.7" y="46.1" width="8.3" height="143.9" rx="1.5" class="bar "><title>−0,187 tot −0,171: 311 trekkingen</title></rect><rect x="418.1" y="56.7" width="8.3" height="133.3" rx="1.5" class="bar "><title>−0,171 tot −0,155: 288 trekkingen</title></rect><rect x="428.4" y="62.7" width="8.3" height="127.3" rx="1.5" class="bar "><title>−0,155 tot −0,139: 275 trekkingen</title></rect><rect x="438.7" y="88.6" width="8.3" height="101.4" rx="1.5" class="bar "><title>−0,139 tot −0,123: 219 trekkingen</title></rect><rect x="449.1" y="102.1" width="8.3" height="87.9" rx="1.5" class="bar "><title>−0,123 tot −0,107: 190 trekkingen</title></rect><rect x="459.4" y="126.1" width="8.3" height="63.9" rx="1.5" class="bar "><title>−0,107 tot −0,091: 138 trekkingen</title></rect><rect x="469.7" y="128.4" width="8.3" height="61.6" rx="1.5" class="bar "><title>−0,091 tot −0,075: 133 trekkingen</title></rect><rect x="480.0" y="147.4" width="8.3" height="42.6" rx="1.5" class="bar "><title>−0,075 tot −0,059: 92 trekkingen</title></rect><rect x="490.4" y="156.7" width="8.3" height="33.3" rx="1.5" class="bar "><title>−0,059 tot −0,043: 72 trekkingen</title></rect><rect x="500.7" y="158.5" width="8.3" height="31.5" rx="1.5" class="bar uit"><title>−0,043 tot −0,027: 68 trekkingen</title></rect><rect x="511.0" y="173.3" width="8.3" height="16.7" rx="1.5" class="bar uit"><title>−0,027 tot −0,011: 36 trekkingen</title></rect><rect x="521.3" y="181.7" width="8.3" height="8.3" rx="1.5" class="bar uit"><title>−0,011 tot 0,005: 18 trekkingen</title></rect><rect x="531.7" y="185.8" width="8.3" height="4.2" rx="1.5" class="bar uit"><title>0,005 tot 0,021: 9 trekkingen</title></rect><rect x="542.0" y="186.8" width="8.3" height="3.2" rx="1.5" class="bar uit"><title>0,021 tot 0,037: 7 trekkingen</title></rect><rect x="552.3" y="188.6" width="8.3" height="1.4" rx="1.5" class="bar uit"><title>0,037 tot 0,053: 3 trekkingen</title></rect><rect x="562.7" y="186.3" width="8.3" height="3.7" rx="1.5" class="bar uit"><title>0,053 tot 0,069: 8 trekkingen</title></rect><rect x="573.0" y="190.0" width="8.3" height="0.0" rx="1.5" class="bar uit"><title>0,069 tot 0,085: 0 trekkingen</title></rect><rect x="583.3" y="190.0" width="8.3" height="0.0" rx="1.5" class="bar uit"><title>0,085 tot 0,101: 0 trekkingen</title></rect><rect x="593.6" y="189.5" width="8.3" height="0.5" rx="1.5" class="bar uit"><title>0,101 tot 0,117: 1 trekkingen</title></rect><text x="76.2" y="208" class="tick" text-anchor="middle">−0,7</text><text x="140.7" y="208" class="tick" text-anchor="middle">−0,6</text><text x="205.1" y="208" class="tick" text-anchor="middle">−0,5</text><text x="269.6" y="208" class="tick" text-anchor="middle">−0,4</text><text x="334.0" y="208" class="tick" text-anchor="middle">−0,3</text><text x="398.4" y="208" class="tick" text-anchor="middle">−0,2</text><text x="462.9" y="208" class="tick" text-anchor="middle">−0,1</text><text x="527.3" y="208" class="tick" text-anchor="middle">0,0</text><text x="591.8" y="208" class="tick" text-anchor="middle">0,1</text><line x1="527.3" x2="527.3" y1="22" y2="190" class="nul"/><text x="531.3" y="32" class="tick">0</text><line x1="386.8" x2="386.8" y1="22" y2="190" class="punt"/><text x="386.8" y="16" class="lab" text-anchor="middle">ab = −0,218</text><line x1="44" x2="624" y1="190.0" y2="190.0" class="axis"/><text x="334.0" y="226" class="as" text-anchor="middle">Indirect effect a × b (5000 bootstrapsteekproeven)</text></svg></div>
+  <div class="panel"><h4>Gevoeligheidsanalyses</h4><p class="cap">Indirect effect met 95%-BI per specificatie. Grijs = interval bevat 0. Let op: bij de gedragsmaat heeft Y een andere schaal (0–4).</p><svg viewBox="0 0 640 280" class="chart forest" role="img" aria-label="Gevoeligheidsanalyses"><line x1="558.3" x2="558.3" y1="14" y2="250" class="nul"/><text x="311.7" y="270" class="tick" text-anchor="middle">−0,6</text><text x="393.9" y="270" class="tick" text-anchor="middle">−0,4</text><text x="476.1" y="270" class="tick" text-anchor="middle">−0,2</text><text x="558.3" y="270" class="tick" text-anchor="middle">0,0</text><text x="0" y="38" class="flab">Hoofdanalyse (Y = deelnameschaal)</text><text x="0" y="53" class="tick">n = 35</text><line x1="374.0" x2="543.0" y1="34" y2="34" class="ci "/><circle cx="468.7" cy="34" r="6" class="fdot "><title>ab = −0,218 [−0,448; −0,037]</title></circle><text x="0" y="82" class="flab">Met covariaten geslacht + vrijdagwerk</text><text x="0" y="97" class="tick">n = 35</text><line x1="282.7" x2="550.7" y1="78" y2="78" class="ci "/><circle cx="456.5" cy="78" r="6" class="fdot "><title>ab = −0,248 [−0,671; −0,019]</title></circle><text x="0" y="126" class="flab">Alleen mannen</text><text x="0" y="141" class="tick">n = 31</text><line x1="347.8" x2="547.9" y1="122" y2="122" class="ci "/><circle cx="465.8" cy="122" r="6" class="fdot "><title>ab = −0,225 [−0,512; −0,025]</title></circle><text x="0" y="170" class="flab">Y = aantal bijgewoond (0–4)</text><text x="0" y="185" class="tick">n = 34</text><line x1="384.1" x2="581.6" y1="166" y2="166" class="ci ns"/><circle cx="498.6" cy="166" r="6" class="fdot ns"><title>ab = −0,145 [−0,424; 0,056]</title></circle><text x="0" y="214" class="flab">M zonder item M2 (schaal 5 items)</text><text x="0" y="229" class="tick">n = 35</text><line x1="292.5" x2="486.9" y1="210" y2="210" class="ci "/><circle cx="409.8" cy="210" r="6" class="fdot "><title>ab = −0,361 [−0,647; −0,174]</title></circle></svg></div>
+  <h3>Interpretatie</h3>
+  <ul class="bul">
+    <li><b>a-pad:</b> wie meer belemmeringen ervaart, voelt Jumuʿah iets minder als bindende plicht (a = −0,20). Dit pad is marginaal in de hoofdanalyse en significant bij alleen mannen.</li>
+    <li><b>b-pad:</b> bij gelijke belemmeringen voorspelt ervaren verplichting deelname sterk (b = 1,06).</li>
+    <li><b>Indirect effect:</b> ab = −0,218 [−0,448; −0,037], volledig gestandaardiseerd −0,193. Er is <b>significante, gedeeltelijke (complementaire) mediatie</b>.</li>
+    <li><b>Robuust</b> met covariaten, bij alleen mannen en zonder item M2. <b>Niet robuust</b> als de uitkomst het feitelijke aantal bijgewoonde gebeden is.</li>
+  </ul>
+  <h3>Voorbeeldrapportage (APA)</h3>
+  <p class="apa">Een mediatieanalyse met PROCESS Model 4 (Hayes, 2022; 5000 bootstraps) liet zien dat praktische belemmeringen negatief samenhingen met deelname aan Jumuʿah, <i>c</i> = −0,64, <i>p</i> &lt; ,001. Belemmeringen voorspelden ervaren religieuze verplichting marginaal, <i>a</i> = −0,20, <i>p</i> = ,086. Ervaren verplichting voorspelde deelname sterk, <i>b</i> = 1,06, <i>p</i> &lt; ,001. Het indirecte effect was significant, <i>ab</i> = −0,218, 95%-BI [−0,448; −0,037], en het directe effect bleef significant, <i>c′</i> = −0,42, <i>p</i> &lt; ,001. Dit wijst op gedeeltelijke mediatie.</p>
+</section>
+
+<section id="lim">
+  <div class="num-h">09</div>
+  <h2>Beperkingen</h2>
+  <div class="grid2">
+    <div class="lim"><h4>Kleine steekproef</h4><p>Met n = 35 is er weinig power voor het a-pad, zijn de factoroplossingen onstabiel en zijn de celvullingen in de kruistabellen klein. De resultaten zijn verkennend.</p></div>
+    <div class="lim"><h4>Cross-sectioneel</h4><p>De volgorde X → M → Y is niet aangetoond. Het omgekeerde is ook plausibel: wie vaak gaat, ervaart het sterker als plicht en belemmeringen als kleiner.</p></div>
+    <div class="lim"><h4>Overlap tussen M en Y</h4><p>De schalen correleren 0,76 en laden samen op één factor. Een deel van het b-pad kan inhoudelijke overlap of gedeelde methodevariantie zijn.</p></div>
+    <div class="lim"><h4>Selectieve steekproef</h4><p>Vooral mannen met een Turkse of Marokkaanse achtergrond, en waarschijnlijk relatief religieus betrokken. Daarnaast zijn er plafondeffecten in M en Y.</p></div>
+  </div>
+</section>
+
+<section id="repro">
+  <div class="num-h">10</div>
+  <h2>Methode en code</h2>
+  <p>Alle analyses zijn uitgevoerd in Python (pandas, statsmodels, factor_analyzer, scipy). De scripts staan in de map <code>scripts/</code> en alle tabellen als CSV in <code>output/tabellen/</code>. Bootstrap-seed: 20261022.</p>
+  <p class="muted" style="font-size:14px">De ruwe data wordt niet gepubliceerd. Het gaat om bijzondere persoonsgegevens (religie, AVG art. 9), en bij n = 35 kunnen respondenten met een unieke combinatie van kenmerken herleidbaar zijn.</p>
+  <p class="muted" style="font-size:14px">Literatuur: Hayes, A. F. (2022). <i>Introduction to mediation, moderation, and conditional process analysis</i> (3rd ed.). Guilford. · Horn, J. L. (1965). <i>Psychometrika, 30</i>, 179–185. · Kaiser, H. F. (1974). <i>Psychometrika, 39</i>, 31–36. · Feldt, L. S. (1965). <i>Psychometrika, 30</i>, 357–370.</p>
+</section>
+
+</main>
+</div>
+<footer class="site">Onderzoek naar deelname aan Jumuʿah · 35 respondenten · gegenereerd met <code>scripts/04_website.py</code></footer>
+<button class="themeknop" id="tk" type="button">Donker / licht</button>
+
+<script>
+(function () {
+  var root = document.documentElement, k = 'jumuah-thema';
+  try { var t = localStorage.getItem(k); if (t) root.setAttribute('data-theme', t); } catch (e) {}
+  document.getElementById('tk').addEventListener('click', function () {
+    var donker = root.getAttribute('data-theme') ? root.getAttribute('data-theme') === 'dark'
+               : matchMedia('(prefers-color-scheme: dark)').matches;
+    var nieuw = donker ? 'light' : 'dark';
+    root.setAttribute('data-theme', nieuw);
+    try { localStorage.setItem(k, nieuw); } catch (e) {}
+  });
+  var links = document.querySelectorAll('nav.toc a');
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('actief', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  document.querySelectorAll('main section').forEach(function (s) { io.observe(s); });
+})();
+</script>
+</body>
+</html>
